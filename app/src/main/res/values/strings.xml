@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Baking App</string>
+    <string name="bakingapp_data_url_key">Baking App Data Key</string>
+    <string name="error_need_internet">The Application needs Internet to function</string>
+    <string name="no_data">No Data Found</string>
+</resources>
