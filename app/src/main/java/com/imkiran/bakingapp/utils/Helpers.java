@@ -1,4 +1,4 @@
-package com.imkiran.bakingapp.util;
+package com.imkiran.bakingapp.utils;
 
 import android.content.Context;
 import android.content.ContextWrapper;

@@ -1,4 +1,4 @@
-package com.imkiran.bakingapp.util;
+package com.imkiran.bakingapp.utils;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
