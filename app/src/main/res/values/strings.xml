@@ -3,4 +3,13 @@
     <string name="bakingapp_data_url_key">Baking App Data Key</string>
     <string name="error_need_internet">The Application needs Internet to function</string>
     <string name="no_data">No Data Found</string>
+    <string name="nutella_pie_image_url">https://www.recipeboy.com/wp-content/uploads/2016/09/No-Bake-Nutella-Pie.jpg</string>
+    <string name="brownies_image_url">https://minimalistbaker.com/wp-content/uploads/2013/08/Fudgy-Vegan-Brownies-minimalistbaker.com_.jpg</string>
+    <string name="yellowcake_image_url_">https://images-gmi-pmc.edge-generalmills.com/cc5657a4-6cef-42ba-ae9a-8178670f8b3c.jpg</string>
+    <string name="cheesecake_image_url">https://assets.bonappetit.com/photos/57ae422b53e63daf11a4e420/16:9/w_1000,c_limit/greek-yogurt-cheesecake-with-pomegranate-syrup.jpg</string>
+    <string name="parcel_recipe">parcel_recipe</string>
+    <string name="parcel_ingredients">parcel_ingredients</string>
+    <string name="parcel_steps">parcel_steps</string>
+
+
 </resources>

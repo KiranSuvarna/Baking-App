@@ -95,8 +95,8 @@ public class Recipe implements Parcelable {
             instance.servings = ((String) in.readValue((String.class.getClassLoader())));
             instance.name = ((String) in.readValue((String.class.getClassLoader())));
             instance.image = ((String) in.readValue((String.class.getClassLoader())));
-            instance.ingredients = ((Ingredients[]) in.readValue((int.class.getClassLoader())));
             instance.steps = ((Steps[]) in.readValue((String.class.getClassLoader())));
+            instance.ingredients = ((Ingredients[]) in.readValue((int.class.getClassLoader())));
             return instance;
         }
 
@@ -118,7 +118,7 @@ public class Recipe implements Parcelable {
         parcel.writeValue(servings);
         parcel.writeValue(name);
         parcel.writeValue(image);
-        parcel.writeValue(ingredients);
-        parcel.writeValue(steps);
-    }
+        parcel.writeArray(steps);
+        parcel.writeArray(ingredients);
+     }
 }

@@ -1,10 +1,16 @@
 package com.imkiran.bakingapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+import java.util.Set;
+
 /**
  * Created by imkiran on 30/12/17.
  */
 
-public class Steps {
+public class Steps implements Parcelable{
     private String id;
 
     private String shortDescription;
@@ -14,6 +20,7 @@ public class Steps {
     private String videoURL;
 
     private String thumbnailURL;
+
 
     public String getId ()
     {
@@ -70,4 +77,36 @@ public class Steps {
     {
         return "ClassPojo [id = "+id+", shortDescription = "+shortDescription+", description = "+description+", videoURL = "+videoURL+", thumbnailURL = "+thumbnailURL+"]";
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    protected Steps(Parcel in) {
+        id = in.readString();
+        shortDescription = in.readString();
+        description = in.readString();
+        videoURL = in.readString();
+        thumbnailURL = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(shortDescription);
+        parcel.writeString(description);
+        parcel.writeString(videoURL);
+        parcel.writeString(thumbnailURL);
+    }
+
+    public static final Creator<Steps> CREATOR = new Creator<Steps>() {
+        public Steps createFromParcel(Parcel source) {
+            return new Steps(source);
+        }
+
+        public Steps[] newArray(int size) {
+            return new Steps[size];
+        }
+    };
 }

@@ -1,10 +1,12 @@
 package com.imkiran.bakingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -21,10 +23,11 @@ import com.imkiran.bakingapp.utils.NetworkUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Recipe>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Recipe>>{
 
     private static final int BAKING_APP_ASYNK_ID = 100;
 
@@ -39,7 +42,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
         relativeLayout =  findViewById(R.id.activity_main);
         recyclerView =  findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
+        boolean targetSize = getResources().getBoolean(R.bool.tab_layout);
+        if(targetSize) {
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this,4);
+            recyclerView.setLayoutManager(gridLayoutManager);
+        }
+        else{
+            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        }
         dataList = Collections.<Recipe>emptyList();
         getBakingData();
     }
@@ -70,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
-
     @Override
     public Loader<List<Recipe>> onCreateLoader(int id, final Bundle args) {
         return new AsyncTaskLoader<List<Recipe>>(this) {
@@ -98,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 try {
                     URL url = new URL(urlString);
                     String rawData = NetworkUtils.getBakingAppData(url);
-                    return JsonUtils.getRecipeNames(rawData);
+                    return JsonUtils.getRecipeNames(MainActivity.this, rawData);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
@@ -119,10 +128,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (null == data) {
             Toast.makeText(this, getString(R.string.no_data), Toast.LENGTH_LONG).show();
         } else {
-            Log.d("MainActivity:data",new Gson().toJson(data));
-            recyclerAdapter = new RecyclerAdapter(MainActivity.this,data);
+            recyclerAdapter = new RecyclerAdapter(MainActivity.this, data);
             recyclerView.setAdapter(recyclerAdapter);
-            Toast.makeText(this, data.toString(), Toast.LENGTH_LONG).show();
         }
     }
 
