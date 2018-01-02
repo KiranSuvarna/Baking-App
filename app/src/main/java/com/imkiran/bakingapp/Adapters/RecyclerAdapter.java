@@ -14,12 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.imkiran.bakingapp.MainActivity;
 import com.imkiran.bakingapp.R;
 import com.imkiran.bakingapp.RecipeDetails;
-import com.imkiran.bakingapp.models.Ingredients;
 import com.imkiran.bakingapp.models.Recipe;
-import com.imkiran.bakingapp.models.Steps;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -59,12 +56,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
 
         holder.nameTextView.setText(recipe.getName());
 
-        /*Picasso.with(context)
-                .load(datum.getNameImage())
-                .transform(new CircleTransform())
-                .into(holder.profileImage); */
-
-        //holder.profileName.setText(recipe.getServings());
     }
 
 
@@ -75,29 +66,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        // Your holder should contain a member variable
-        // for any view that will be set as you render a row
         ImageView recipe_image;
-        //ImageView profileImage;
         TextView nameTextView;
-        //TextView profileName;
-        //TextView timeStamp;
         CardView cardView;
 
 
-        // We also create a constructor that accepts the entire item row
-        // and does the view lookups to find each subview
         CustomViewHolder(View itemView) {
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
             super(itemView);
 
-            nameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
-            //profileName = (TextView) itemView.findViewById(R.id.profile_name);
-            //timeStamp = (TextView) itemView.findViewById(R.id.time_stamp);
-            recipe_image = (ImageView) itemView.findViewById(R.id.recipe_image);
-            //profileImage = (ImageView) itemView.findViewById(R.id.profile_image);
-            cardView = (CardView) itemView.findViewById(R.id.card_view);
+            nameTextView =  itemView.findViewById(R.id.recipe_name);
+            recipe_image =  itemView.findViewById(R.id.recipe_image);
+            cardView =  itemView.findViewById(R.id.card_view);
 
             cardView.setOnClickListener(this);
         }

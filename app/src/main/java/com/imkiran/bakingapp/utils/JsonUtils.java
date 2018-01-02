@@ -1,10 +1,12 @@
 package com.imkiran.bakingapp.utils;
 
 import android.content.Context;
+import android.os.Parcel;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.imkiran.bakingapp.R;
 import com.imkiran.bakingapp.models.Ingredients;
 import com.imkiran.bakingapp.models.Recipe;
@@ -23,21 +25,23 @@ import java.util.List;
  */
 
 public class JsonUtils  extends AppCompatActivity{
-    public static List<Recipe> getRecipeNames(Context context,String data){
-        final String TAG_ID = "id";
-        final String TAG_NAME = "name";
-        final String TAG_SERVINGS = "servings";
+
+   public static List<Recipe> getRecipeNames(Context context,List<Recipe> dataObject){
+       Gson gson = new Gson();
+       String data = gson.toJson(dataObject);
+       final String TAG_ID = "id";
+       final String TAG_NAME = "name";
+       final String TAG_SERVINGS = "servings";
         Recipe[] recipes = null;
-        Gson gson = new Gson();
         try {
             JSONArray jsonArray = new JSONArray(data);
-             recipes = new Recipe[jsonArray.length()];
+            recipes = new Recipe[jsonArray.length()];
             for(int i=0;i<jsonArray.length();i++){
                 recipes[i] = new Recipe();
                 JSONObject recipeInfo = jsonArray.getJSONObject(i);
-                recipes[i].setId(recipeInfo.getString(TAG_ID));
+                recipes[i].setId(recipeInfo.getInt(TAG_ID));
                 recipes[i].setName(recipeInfo.getString(TAG_NAME));
-                recipes[i].setServings(recipeInfo.getString(TAG_SERVINGS));
+                recipes[i].setServings(recipeInfo.getInt(TAG_SERVINGS));
                 String ingredients = recipeInfo.getString("ingredients");
                 recipes[i].setIngredients(gson.fromJson(ingredients,Ingredients[].class));
                 String steps = recipeInfo.getString("steps");
@@ -62,7 +66,7 @@ public class JsonUtils  extends AppCompatActivity{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("JSON : ",new Gson().toJson(recipes));
-        return new ArrayList(Arrays.asList(recipes));
+       Log.d("JSON : ",new Gson().toJson(recipes));
+       return new ArrayList(Arrays.asList(recipes));
     }
 }

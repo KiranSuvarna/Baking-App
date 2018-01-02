@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.imkiran.bakingapp.Adapters.RecyclerAdapter;
 import com.imkiran.bakingapp.models.Recipe;
+import com.imkiran.bakingapp.retrofit.IRecipe;
+import com.imkiran.bakingapp.retrofit.RetrofitBuilder;
 import com.imkiran.bakingapp.utils.Helpers;
 import com.imkiran.bakingapp.utils.JsonUtils;
 import com.imkiran.bakingapp.utils.NetworkUtils;
@@ -26,6 +28,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Recipe>>{
 
@@ -105,10 +111,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
 
                 try {
-                    URL url = new URL(urlString);
-                    String rawData = NetworkUtils.getBakingAppData(url);
-                    return JsonUtils.getRecipeNames(MainActivity.this, rawData);
-                } catch (MalformedURLException e) {
+                    IRecipe iRecipe = RetrofitBuilder.Retrieve();
+                    Call<ArrayList<Recipe>> recipe = iRecipe.getRecipe();
+                    List<Recipe> recipes = recipe.execute().body();
+                    Log.d("retrofit:data",new Gson().toJson(recipes));
+                    return JsonUtils.getRecipeNames(MainActivity.this,recipes);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
