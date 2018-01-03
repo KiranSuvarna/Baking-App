@@ -1,6 +1,5 @@
 package com.imkiran.bakingapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -15,23 +14,19 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.imkiran.bakingapp.Adapters.RecyclerAdapter;
+import com.imkiran.bakingapp.Adapters.RecipeAdapter;
 import com.imkiran.bakingapp.models.Recipe;
 import com.imkiran.bakingapp.retrofit.IRecipe;
 import com.imkiran.bakingapp.retrofit.RetrofitBuilder;
 import com.imkiran.bakingapp.utils.Helpers;
 import com.imkiran.bakingapp.utils.JsonUtils;
-import com.imkiran.bakingapp.utils.NetworkUtils;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Recipe>>{
 
@@ -40,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     RecyclerView recyclerView;
     RelativeLayout relativeLayout;
     List<Recipe> dataList;
-    RecyclerAdapter recyclerAdapter;
+    RecipeAdapter recipeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,8 +131,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (null == data) {
             Toast.makeText(this, getString(R.string.no_data), Toast.LENGTH_LONG).show();
         } else {
-            recyclerAdapter = new RecyclerAdapter(MainActivity.this, data);
-            recyclerView.setAdapter(recyclerAdapter);
+            recipeAdapter = new RecipeAdapter(MainActivity.this, data);
+            recyclerView.setAdapter(recipeAdapter);
         }
     }
 

@@ -16,24 +16,12 @@ import java.util.List;
 
 public class Recipe implements Parcelable {
 
-    @SerializedName("id")
-    @Expose
     private Integer id;
-    @SerializedName("servings")
-    @Expose
     private Integer servings;
-    @SerializedName("name")
-    @Expose
     private String name;
-    @SerializedName("image")
-    @Expose
     private String image;
-    @SerializedName("ingredients")
-    @Expose
-    private Ingredients[] ingredients = null;
-    @SerializedName("steps")
-    @Expose
-    private Steps[] steps = null;
+    private List<Ingredients> ingredients = null;
+    private List<Steps> steps = null;
 
     public Integer getId() {
         return id;
@@ -51,19 +39,19 @@ public class Recipe implements Parcelable {
         this.name = name;
     }
 
-    public Ingredients[] getIngredients() {
+    public List<Ingredients> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Ingredients[] ingredients) {
+    public void setIngredients(List<Ingredients> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public Steps[] getSteps() {
+    public List<Steps> getSteps() {
         return steps;
     }
 
-    public void setSteps(Steps[] steps) {
+    public void setSteps(List<Steps> steps) {
         this.steps = steps;
     }
 
@@ -103,13 +91,13 @@ public class Recipe implements Parcelable {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
-            dest.writeArray(ingredients);
+            dest.writeList(ingredients);
         }
         if (steps == null) {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
-            dest.writeArray(steps);
+            dest.writeList(steps);
         }
         if (servings == null) {
             dest.writeByte((byte) (0x00));
@@ -128,14 +116,14 @@ public class Recipe implements Parcelable {
             recipe.id = in.readByte() == 0x00 ? null : in.readInt();
             recipe.name = in.readString();
             if (in.readByte() == 0x01) {
-                //ingredients = new ArrayList<>();
-                in.readArray(Ingredients.class.getClassLoader());
+                recipe.ingredients = new ArrayList<>();
+                in.readList(recipe.ingredients,Ingredients.class.getClassLoader());
             } else {
                 recipe.ingredients = null;
             }
             if (in.readByte() == 0x01) {
-                //steps = new ArrayList<>();
-                in.readArray(Steps.class.getClassLoader());
+                recipe.steps = new ArrayList<>();
+                in.readList(recipe.steps,Steps.class.getClassLoader());
             } else {
                 recipe.steps = null;
             }

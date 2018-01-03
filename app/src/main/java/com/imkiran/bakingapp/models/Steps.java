@@ -3,9 +3,6 @@ package com.imkiran.bakingapp.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-import java.util.Set;
-
 /**
  * Created by imkiran on 30/12/17.
  */

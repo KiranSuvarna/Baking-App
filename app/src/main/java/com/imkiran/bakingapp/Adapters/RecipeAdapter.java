@@ -27,19 +27,19 @@ import java.util.List;
  * Created by imkiran on 29/12/17.
  */
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder>{
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CustomViewHolder>{
 
     private Context context;
     private List<Recipe> dataList;
 
-    public RecyclerAdapter(Context context,List<Recipe> dataList){
+    public RecipeAdapter(Context context, List<Recipe> dataList){
         this.context = context;
         this.dataList = dataList;
     }
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_list,null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_list_recipe,null);
         CustomViewHolder customViewHolder = new CustomViewHolder(view);
         return customViewHolder;
     }
@@ -57,8 +57,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
         holder.nameTextView.setText(recipe.getName());
 
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -84,10 +82,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Custom
         @Override
         public void onClick(View v) {
             int clickedPosition = getAdapterPosition();
-            Log.d("clicked_position :",new Gson().toJson(dataList.get(clickedPosition)));
             Bundle bundle = new Bundle();
             ArrayList<Recipe> recipeArrayList = new ArrayList<>();
             recipeArrayList.add(dataList.get(clickedPosition));
+            Log.d("clicked_position :",new Gson().toJson(recipeArrayList));
             bundle.putParcelableArrayList(context.getResources().getString(R.string.parcel_recipe),recipeArrayList);
             Intent intent = new Intent(context, RecipeDetails.class);
             intent.putExtras(bundle);

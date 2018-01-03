@@ -1,16 +1,12 @@
 package com.imkiran.bakingapp.utils;
 
 import android.content.Context;
-import android.os.Parcel;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.imkiran.bakingapp.R;
-import com.imkiran.bakingapp.models.Ingredients;
 import com.imkiran.bakingapp.models.Recipe;
-import com.imkiran.bakingapp.models.Steps;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,10 +38,10 @@ public class JsonUtils  extends AppCompatActivity{
                 recipes[i].setId(recipeInfo.getInt(TAG_ID));
                 recipes[i].setName(recipeInfo.getString(TAG_NAME));
                 recipes[i].setServings(recipeInfo.getInt(TAG_SERVINGS));
-                String ingredients = recipeInfo.getString("ingredients");
-                recipes[i].setIngredients(gson.fromJson(ingredients,Ingredients[].class));
-                String steps = recipeInfo.getString("steps");
-                recipes[i].setSteps(gson.fromJson(steps, Steps[].class));
+                //String ingredients = recipeInfo.getString("ingredients");
+                recipes[i].setIngredients(new ArrayList(Arrays.asList(recipeInfo.get("ingredients"))));
+                //String steps = recipeInfo.getString("steps");
+                recipes[i].setSteps(new ArrayList(Arrays.asList(recipeInfo.get("steps"))));
                 switch (recipes[i].getName()){
                     case "Nutella Pie":
                         recipes[i].setImage(context.getString(R.string.nutella_pie_image_url));
