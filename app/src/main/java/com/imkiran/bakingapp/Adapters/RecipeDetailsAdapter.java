@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.imkiran.bakingapp.R;
 import com.imkiran.bakingapp.RecipeDetails;
+import com.imkiran.bakingapp.models.Ingredients;
 import com.imkiran.bakingapp.models.Recipe;
 
 import java.util.List;
@@ -24,9 +25,9 @@ import java.util.List;
 public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdapter.CustomViewHolder>{
 
     private Context context;
-    private List<Recipe> data;
+    private List<Ingredients> data;
 
-    public RecipeDetailsAdapter(Context context, List<Recipe> data){
+    public RecipeDetailsAdapter(Context context, List<Ingredients> data){
         this.data = data;
         this.context = context;
     }
@@ -34,24 +35,30 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_list_recipe_details,null);
-        RecipeDetailsAdapter.CustomViewHolder customViewHolder = new RecipeDetailsAdapter.CustomViewHolder(view);
+        CustomViewHolder customViewHolder = new CustomViewHolder(view);
         return customViewHolder;
     }
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-            Recipe recipe = data.get(position);
-            Log.d("recipe_details:ing",new Gson().toJson(recipe.getIngredients().get(0).getIngredient()));
-            holder.recipeIngredient.setText(recipe.getIngredients().get(0).getIngredient());
+            Ingredients ingredients = data.get(position);
+            holder.recipeIngredient.setText(ingredients.getIngredient());
+            holder.recipeIngredientQuantity.setText(String.valueOf(ingredients.getQuantity()));
+            Log.d("measure: ",ingredients.getMeasure());
+            holder.recipeIngredientMeasure.setText(ingredients.getMeasure());
+
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;//data!=null ? data.size() : 0;
+        return data!=null ? data.size() : 0;
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView recipeIngredient;
+        TextView recipeIngredientQuantity;
+        TextView recipeIngredientMeasure;
         CardView cardView;
 
 
@@ -59,6 +66,8 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
             super(itemView);
 
             recipeIngredient =  itemView.findViewById(R.id.recipe_ingredient);
+            recipeIngredientQuantity = itemView.findViewById(R.id.recipe_ingredient_quantity);
+            recipeIngredientMeasure = itemView.findViewById(R.id.recipe_ingredient_measure);
             cardView =  itemView.findViewById(R.id.card_view_recipe_details);
 
             cardView.setOnClickListener(this);

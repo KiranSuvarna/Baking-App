@@ -9,17 +9,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.imkiran.bakingapp.Adapters.RecipeAdapter;
 import com.imkiran.bakingapp.models.Recipe;
 import com.imkiran.bakingapp.retrofit.IRecipe;
 import com.imkiran.bakingapp.retrofit.RetrofitBuilder;
 import com.imkiran.bakingapp.utils.Helpers;
-import com.imkiran.bakingapp.utils.JsonUtils;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -109,8 +106,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     IRecipe iRecipe = RetrofitBuilder.Retrieve();
                     Call<ArrayList<Recipe>> recipe = iRecipe.getRecipe();
                     List<Recipe> recipes = recipe.execute().body();
-                    Log.d("retrofit:data",new Gson().toJson(recipes));
-                    return JsonUtils.getRecipeNames(MainActivity.this,recipes);
+                    return recipes;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

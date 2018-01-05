@@ -47,9 +47,25 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CustomView
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         Recipe recipe = dataList.get(position);
+        String recipeImage = "";
+        switch (recipe.getName()){
+            case "Nutella Pie":
+                recipeImage = context.getString(R.string.nutella_pie_image_url);
+                break;
+            case  "Brownies":
+                recipeImage  = context.getString(R.string.brownies_image_url);
+                break;
+            case "Yellow Cake":
+                recipeImage = context.getString(R.string.yellowcake_image_url_);
+                break;
+            case "Cheesecake":
+                recipeImage = context.getString(R.string.cheesecake_image_url);
+                break;
+            default: break;
+        }
 
         Picasso.with(context)
-                .load(recipe.getImage())
+                .load(recipeImage)
                 .fit()
                 .centerCrop()
                 .into(holder.recipe_image);
