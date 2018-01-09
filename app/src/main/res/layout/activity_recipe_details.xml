@@ -7,9 +7,16 @@
     tools:context=".MainActivity">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_ingredient_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_recipe_details"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/recycler_view_ingredient_head">
     </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

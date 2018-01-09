@@ -7,14 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.imkiran.bakingapp.R;
-import com.imkiran.bakingapp.RecipeDetails;
 import com.imkiran.bakingapp.models.Ingredients;
-import com.imkiran.bakingapp.models.Recipe;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -22,12 +20,12 @@ import java.util.List;
  * Created by imkiran on 03/01/18.
  */
 
-public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdapter.CustomViewHolder>{
+public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredientsAdapter.CustomViewHolder>{
 
     private Context context;
     private List<Ingredients> data;
 
-    public RecipeDetailsAdapter(Context context, List<Ingredients> data){
+    public RecipeIngredientsAdapter(Context context, List<Ingredients> data){
         this.data = data;
         this.context = context;
     }
@@ -42,12 +40,10 @@ public class RecipeDetailsAdapter extends RecyclerView.Adapter<RecipeDetailsAdap
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
             Ingredients ingredients = data.get(position);
-            holder.recipeIngredient.setText(ingredients.getIngredient());
+            holder.recipeIngredient.setText(StringUtils.capitalize(ingredients.getIngredient()));
             holder.recipeIngredientQuantity.setText(String.valueOf(ingredients.getQuantity()));
             Log.d("measure: ",ingredients.getMeasure());
             holder.recipeIngredientMeasure.setText(ingredients.getMeasure());
-
-
     }
 
     @Override

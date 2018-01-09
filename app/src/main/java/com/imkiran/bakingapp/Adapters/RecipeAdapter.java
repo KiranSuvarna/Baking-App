@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.imkiran.bakingapp.R;
-import com.imkiran.bakingapp.RecipeDetails;
+import com.imkiran.bakingapp.RecipeSteps;
 import com.imkiran.bakingapp.models.Recipe;
 import com.squareup.picasso.Picasso;
 
@@ -46,7 +46,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CustomView
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        Recipe recipe = dataList.get(position);
+            Recipe recipe = dataList.get(position);
         String recipeImage = "";
         switch (recipe.getName()){
             case "Nutella Pie":
@@ -103,7 +103,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CustomView
             recipeArrayList.add(dataList.get(clickedPosition));
             Log.d("clicked_position :",new Gson().toJson(recipeArrayList));
             bundle.putParcelableArrayList(context.getResources().getString(R.string.parcel_recipe),recipeArrayList);
-            Intent intent = new Intent(context, RecipeDetails.class);
+            Intent intent = new Intent(context, RecipeSteps.class);
             intent.putExtras(bundle);
             context.startActivity(intent);
             Toast.makeText(context, dataList.get(clickedPosition).getName(), Toast.LENGTH_LONG).show();

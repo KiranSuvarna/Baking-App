@@ -10,6 +10,7 @@
     <string name="parcel_recipe">parcel_recipe</string>
     <string name="parcel_ingredients">parcel_ingredients</string>
     <string name="parcel_steps">parcel_steps</string>
+    <string name="reipce_ingerdients_head_title">Ingredients</string>
 
 
 </resources>
