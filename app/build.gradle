@@ -49,4 +49,8 @@ dependencies {
     implementation files('libs/glide-full-4.5.0.jar')
     //implementation 'com.github.bumptech.glide:glide:4.5.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
+
+    //exo player
+    compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
+
 }

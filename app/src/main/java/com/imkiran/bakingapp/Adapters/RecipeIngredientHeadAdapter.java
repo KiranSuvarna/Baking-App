@@ -1,21 +1,23 @@
 package com.imkiran.bakingapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.imkiran.bakingapp.R;
+import com.imkiran.bakingapp.RecipeIngredients;
+import com.imkiran.bakingapp.RecipeSteps;
 import com.imkiran.bakingapp.models.Ingredients;
-import com.squareup.picasso.Picasso;
+import com.imkiran.bakingapp.models.Recipe;
 
-import org.apache.commons.lang3.StringUtils;
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,9 +27,9 @@ import java.util.List;
 public class RecipeIngredientHeadAdapter extends RecyclerView.Adapter<RecipeIngredientHeadAdapter.CustomViewHolder> {
 
     private Context context;
-    private String data;
+    private List<Recipe> data;
 
-    public RecipeIngredientHeadAdapter(Context context, String data){
+    public RecipeIngredientHeadAdapter(Context context, List<Recipe> data){
         this.data = data;
         this.context = context;
     }
@@ -65,6 +67,14 @@ public class RecipeIngredientHeadAdapter extends RecyclerView.Adapter<RecipeIngr
 
         @Override
         public void onClick(View v) {
+            int clickedPosition = getAdapterPosition();
+            Bundle bundle = new Bundle();
+            ArrayList<Recipe> recipeArrayList = new ArrayList<>();
+            recipeArrayList.add(data.get(clickedPosition));
+            bundle.putParcelableArrayList(context.getResources().getString(R.string.parcel_ingredients),recipeArrayList);
+            Intent intent = new Intent(context, RecipeIngredients.class);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         }
     }
 }

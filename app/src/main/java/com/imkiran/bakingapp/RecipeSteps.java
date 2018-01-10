@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 
 import com.imkiran.bakingapp.Adapters.RecipeIngredientHeadAdapter;
 import com.imkiran.bakingapp.Adapters.RecipeStepsAdapter;
+import com.imkiran.bakingapp.models.Ingredients;
 import com.imkiran.bakingapp.models.Recipe;
 import com.imkiran.bakingapp.models.Steps;
 
@@ -27,10 +28,10 @@ public class RecipeSteps extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_details);
-        recyclerView = findViewById(R.id.recycler_view_recipe_details);
+        setContentView(R.layout.activity_recipe_steps);
+        recyclerView = findViewById(R.id.recycler_view_recipe_steps);
         recyclerViewIngredientsHead = findViewById(R.id.recycler_view_ingredient_head);
-        relativeLayout = findViewById(R.id.activity_recipe_details);
+        relativeLayout = findViewById(R.id.activity_recipe_steps);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerViewIngredientsHead.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -43,11 +44,9 @@ public class RecipeSteps extends AppCompatActivity {
         }
 
         recipeStepsAdapter = new RecipeStepsAdapter(RecipeSteps.this, stepsList);
-        recipeIngredientHead = new RecipeIngredientHeadAdapter(RecipeSteps.this, null);
+        recipeIngredientHead = new RecipeIngredientHeadAdapter(RecipeSteps.this, recipe);
         recyclerView.setAdapter(recipeStepsAdapter);
         recyclerViewIngredientsHead.setAdapter(recipeIngredientHead);
-
-
     }
 }
 

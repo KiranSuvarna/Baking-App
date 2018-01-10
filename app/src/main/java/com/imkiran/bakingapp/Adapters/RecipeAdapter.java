@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.imkiran.bakingapp.R;
 import com.imkiran.bakingapp.RecipeSteps;
 import com.imkiran.bakingapp.models.Recipe;
@@ -101,7 +99,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CustomView
             Bundle bundle = new Bundle();
             ArrayList<Recipe> recipeArrayList = new ArrayList<>();
             recipeArrayList.add(dataList.get(clickedPosition));
-            Log.d("clicked_position :",new Gson().toJson(recipeArrayList));
             bundle.putParcelableArrayList(context.getResources().getString(R.string.parcel_recipe),recipeArrayList);
             Intent intent = new Intent(context, RecipeSteps.class);
             intent.putExtras(bundle);

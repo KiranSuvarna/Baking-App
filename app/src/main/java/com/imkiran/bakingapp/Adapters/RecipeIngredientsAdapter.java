@@ -3,7 +3,6 @@ package com.imkiran.bakingapp.Adapters;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,7 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredi
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_list_recipe_details,null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_list_recipe_ingredients,null);
         CustomViewHolder customViewHolder = new CustomViewHolder(view);
         return customViewHolder;
     }
@@ -42,7 +41,6 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredi
             Ingredients ingredients = data.get(position);
             holder.recipeIngredient.setText(StringUtils.capitalize(ingredients.getIngredient()));
             holder.recipeIngredientQuantity.setText(String.valueOf(ingredients.getQuantity()));
-            Log.d("measure: ",ingredients.getMeasure());
             holder.recipeIngredientMeasure.setText(ingredients.getMeasure());
     }
 
@@ -64,7 +62,7 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredi
             recipeIngredient =  itemView.findViewById(R.id.recipe_ingredient);
             recipeIngredientQuantity = itemView.findViewById(R.id.recipe_ingredient_quantity);
             recipeIngredientMeasure = itemView.findViewById(R.id.recipe_ingredient_measure);
-            cardView =  itemView.findViewById(R.id.card_view_recipe_details);
+            cardView =  itemView.findViewById(R.id.card_view_recipe_ingredients);
 
             cardView.setOnClickListener(this);
         }
