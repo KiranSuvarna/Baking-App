@@ -3,6 +3,7 @@ package com.imkiran.bakingapp.Adapters;
 import android.annotation.SuppressLint;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
@@ -19,6 +20,7 @@ import android.widget.ThemedSpinnerAdapter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.imkiran.bakingapp.R;
+import com.imkiran.bakingapp.RecipeStepsSnap;
 import com.imkiran.bakingapp.models.Ingredients;
 import com.imkiran.bakingapp.models.Steps;
 import com.imkiran.bakingapp.utils.Helpers;
@@ -94,6 +96,8 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
         @Override
         public void onClick(View v) {
+            Intent intent = new Intent(context, RecipeStepsSnap.class);
+            context.startActivity(intent);
         }
     }
 }
