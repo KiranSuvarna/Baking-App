@@ -8,7 +8,6 @@ import android.widget.RelativeLayout;
 
 import com.imkiran.bakingapp.Adapters.RecipeIngredientHeadAdapter;
 import com.imkiran.bakingapp.Adapters.RecipeStepsAdapter;
-import com.imkiran.bakingapp.models.Ingredients;
 import com.imkiran.bakingapp.models.Recipe;
 import com.imkiran.bakingapp.models.Steps;
 

@@ -9,12 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.imkiran.bakingapp.R;
 import com.imkiran.bakingapp.RecipeIngredients;
-import com.imkiran.bakingapp.RecipeSteps;
-import com.imkiran.bakingapp.models.Ingredients;
 import com.imkiran.bakingapp.models.Recipe;
 
 import java.util.ArrayList;

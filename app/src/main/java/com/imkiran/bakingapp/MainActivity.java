@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ import com.imkiran.bakingapp.retrofit.IRecipe;
 import com.imkiran.bakingapp.retrofit.RetrofitBuilder;
 import com.imkiran.bakingapp.utils.Helpers;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

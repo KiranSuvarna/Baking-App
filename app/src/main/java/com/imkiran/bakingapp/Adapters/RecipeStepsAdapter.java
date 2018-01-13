@@ -1,32 +1,22 @@
 package com.imkiran.bakingapp.Adapters;
 
 import android.annotation.SuppressLint;
-import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.media.ThumbnailUtils;
-import android.provider.MediaStore;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ThemedSpinnerAdapter;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.GlideBuilder;
 import com.imkiran.bakingapp.R;
 import com.imkiran.bakingapp.RecipeStepsSnap;
-import com.imkiran.bakingapp.models.Ingredients;
 import com.imkiran.bakingapp.models.Steps;
-import com.imkiran.bakingapp.utils.Helpers;
 import com.squareup.picasso.Picasso;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -96,8 +86,16 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context, RecipeStepsSnap.class);
-            context.startActivity(intent);
+            int clickedPosition = getAdapterPosition();
+            String videoURL = data.get(clickedPosition).getVideoURL();
+            if(!videoURL.isEmpty()){
+                Bundle bundle = new Bundle();
+                bundle.putString("url",data.get(clickedPosition).getVideoURL());
+                Intent intent = new Intent(context, RecipeStepsSnap.class);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+
         }
     }
 }
