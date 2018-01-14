@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -33,6 +34,7 @@ public class RecipeStepsSnap extends AppCompatActivity implements ExoPlayer.Even
     private MediaSessionCompat mediaSessionCompat;
     private PlaybackStateCompat.Builder playbackStateCompatBuilder;
     private long videoPosition;
+    private TextView recipeVideoInstruction;
 
 
     @Override
@@ -43,11 +45,13 @@ public class RecipeStepsSnap extends AppCompatActivity implements ExoPlayer.Even
         simpleExoPlayerView =  findViewById(R.id.playerView);
 
         Bundle intent = getIntent().getExtras();
-        String videoUrl = intent.getString("url");
 
-        initializePlayer(Uri.parse(videoUrl));
+        initializePlayer(Uri.parse(intent.getString(getResources().getString(R.string.recipe_video_url))));
 
         initializeMediaSession();
+
+        recipeVideoInstruction = findViewById(R.id.recipe_video_instruction);
+        recipeVideoInstruction.setText(intent.getString(getResources().getString(R.string.recipe_video_step_instruction)));
 
 
     }
@@ -133,10 +137,8 @@ public class RecipeStepsSnap extends AppCompatActivity implements ExoPlayer.Even
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
         if((playbackState == ExoPlayer.STATE_READY) && playWhenReady){
             playbackStateCompatBuilder.setState(PlaybackStateCompat.STATE_PLAYING,simpleExoPlayer.getCurrentPosition(),1f);
-            Toast.makeText(this,"PLAYING",Toast.LENGTH_SHORT).show();
         }else if(playbackState == ExoPlayer.STATE_READY){
             playbackStateCompatBuilder.setState(PlaybackStateCompat.STATE_PAUSED,simpleExoPlayer.getCurrentPosition(),1f);
-            Toast.makeText(this,"PAUSED",Toast.LENGTH_SHORT).show();
         }
 
     }

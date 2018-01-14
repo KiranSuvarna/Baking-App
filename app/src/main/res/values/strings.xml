@@ -11,6 +11,8 @@
     <string name="parcel_ingredients">parcel_ingredients</string>
     <string name="parcel_steps">parcel_steps</string>
     <string name="reipce_ingerdients_head_title">Ingredients</string>
+    <string name="recipe_video_url">Recipe Steps Video URL</string>
+    <string name="recipe_video_step_instruction">Recipe Video Step Instruction</string>
 
 
 </resources>

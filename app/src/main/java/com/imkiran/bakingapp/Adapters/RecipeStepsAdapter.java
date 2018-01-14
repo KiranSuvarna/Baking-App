@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.imkiran.bakingapp.R;
+import com.imkiran.bakingapp.RecipeStepInstruction;
 import com.imkiran.bakingapp.RecipeStepsSnap;
 import com.imkiran.bakingapp.models.Steps;
 import com.squareup.picasso.Picasso;
@@ -90,8 +91,16 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
             String videoURL = data.get(clickedPosition).getVideoURL();
             if(!videoURL.isEmpty()){
                 Bundle bundle = new Bundle();
-                bundle.putString("url",data.get(clickedPosition).getVideoURL());
+                bundle.putString(context.getResources().getString(R.string.recipe_video_url),data.get(clickedPosition).getVideoURL());
+                bundle.putString(context.getResources().getString(R.string.recipe_video_step_instruction),data.get(clickedPosition).getDescription());
                 Intent intent = new Intent(context, RecipeStepsSnap.class);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+            else if (videoURL.isEmpty()){
+                Bundle bundle = new Bundle();
+                bundle.putString(context.getResources().getString(R.string.recipe_video_step_instruction),data.get(clickedPosition).getDescription());
+                Intent intent = new Intent(context, RecipeStepInstruction.class);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

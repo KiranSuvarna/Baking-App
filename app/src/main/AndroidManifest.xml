@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".RecipeSteps" />
         <activity android:name=".RecipeIngredients" />
-        <activity android:name=".RecipeStepsSnap"></activity>
+        <activity android:name=".RecipeStepsSnap" />
+        <activity android:name=".RecipeStepInstruction"></activity>
     </application>
 
 </manifest>
