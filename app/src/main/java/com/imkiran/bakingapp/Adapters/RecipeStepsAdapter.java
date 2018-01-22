@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.imkiran.bakingapp.R;
 import com.imkiran.bakingapp.RecipeStepInstruction;
-import com.imkiran.bakingapp.RecipeStepsSnap;
 import com.imkiran.bakingapp.models.Steps;
 import com.squareup.picasso.Picasso;
 
@@ -29,14 +28,26 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     private Context context;
     private List<Steps> data;
 
-    public RecipeStepsAdapter(Context context, List<Steps> data){
+
+    final private ItemClickListener itemClickListener;
+
+
+    public interface ItemClickListener {
+        void onClick(List<Steps> stepsList, int clickedIndex);
+    }
+
+    public RecipeStepsAdapter(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    public void setData(Context context, List<Steps> data) {
         this.data = data;
         this.context = context;
     }
 
     @Override
     public RecipeStepsAdapter.CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_list_recipe_steps,null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_list_recipe_steps, null);
         RecipeStepsAdapter.CustomViewHolder customViewHolder = new RecipeStepsAdapter.CustomViewHolder(view);
         return customViewHolder;
     }
@@ -47,14 +58,14 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         Steps steps = data.get(position);
 
         final String videoURL = steps.getVideoURL();
-        if(!videoURL.isEmpty()){
+        if (!videoURL.isEmpty()) {
             //generate thumbnail
             Glide
                     .with(context)
                     .load(videoURL)
                     .thumbnail(1f)
                     .into(holder.recipeStepImage);
-        }else{
+        } else {
             //load default image
             Picasso.with(context)
                     .load(R.drawable.baking)
@@ -67,20 +78,20 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
 
     @Override
     public int getItemCount() {
-        return data!=null ? data.size() : 0;
+        return data != null ? data.size() : 0;
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView recipeStepImage;
-        TextView  recipeStepTitle;
+        TextView recipeStepTitle;
         CardView cardView;
 
         CustomViewHolder(View itemView) {
             super(itemView);
 
-            recipeStepImage =  itemView.findViewById(R.id.recipe_step_image);
+            recipeStepImage = itemView.findViewById(R.id.recipe_step_image);
             recipeStepTitle = itemView.findViewById(R.id.recipe_step_title);
-            cardView =  itemView.findViewById(R.id.card_view_recipe_steps);
+            cardView = itemView.findViewById(R.id.card_view_recipe_steps);
 
             cardView.setOnClickListener(this);
         }
@@ -88,23 +99,18 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         @Override
         public void onClick(View v) {
             int clickedPosition = getAdapterPosition();
-            String videoURL = data.get(clickedPosition).getVideoURL();
-            if(!videoURL.isEmpty()){
+           // String videoURL = data.get(clickedPosition).getVideoURL();
+            /*if (videoURL.isEmpty()) {
                 Bundle bundle = new Bundle();
-                bundle.putString(context.getResources().getString(R.string.recipe_video_url),data.get(clickedPosition).getVideoURL());
-                bundle.putString(context.getResources().getString(R.string.recipe_video_step_instruction),data.get(clickedPosition).getDescription());
-                Intent intent = new Intent(context, RecipeStepsSnap.class);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
-            }
-            else if (videoURL.isEmpty()){
-                Bundle bundle = new Bundle();
-                bundle.putString(context.getResources().getString(R.string.recipe_video_step_instruction),data.get(clickedPosition).getDescription());
+                bundle.putString(context.getResources().getString(R.string.recipe_video_step_instruction), data.get(clickedPosition).getDescription());
                 Intent intent = new Intent(context, RecipeStepInstruction.class);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
-            }
+            }*/
+            itemClickListener.onClick(data, clickedPosition);
 
         }
+
     }
 }
+

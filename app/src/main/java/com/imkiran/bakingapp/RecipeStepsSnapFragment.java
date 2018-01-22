@@ -2,11 +2,14 @@ package com.imkiran.bakingapp;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -25,58 +28,91 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.imkiran.bakingapp.models.Recipe;
+import com.imkiran.bakingapp.models.Steps;
 
-public class RecipeStepsSnap extends AppCompatActivity implements ExoPlayer.EventListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.EventListener {
+
+    public RecipeStepsSnapFragment(){
+
+    }
+
+    private ItemClickListener itemClickListener;
+
+
+    public interface ItemClickListener{
+        void onClick(List<Steps> stepsList, int clickedIndex);
+    }
+
 
     private SimpleExoPlayerView simpleExoPlayerView;
     private SimpleExoPlayer simpleExoPlayer;
-    private final String TAG  = RecipeStepsSnap.class.getSimpleName();
+    private final String TAG = RecipeStepsSnapFragment.class.getSimpleName();
     private MediaSessionCompat mediaSessionCompat;
     private PlaybackStateCompat.Builder playbackStateCompatBuilder;
     private long videoPosition;
     private TextView recipeVideoInstruction;
+    private ArrayList<Steps> steps = new ArrayList<>();
+    private ArrayList<Recipe> recipes;
+    private int clickedIndex;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_steps_snap);
+    public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle savedInstanceState) {
 
-        simpleExoPlayerView =  findViewById(R.id.playerView);
+        if (savedInstanceState != null) {
+            steps = savedInstanceState.getParcelableArrayList("recipe_step_selected");
+            clickedIndex = savedInstanceState.getInt("clicked_index");
+        } else {
+            steps = getArguments().getParcelableArrayList("recipe_step_selected");
+            if (steps != null) {
+                steps = getArguments().getParcelableArrayList("recipe_step_selected");
+                clickedIndex = getArguments().getInt("clicked_index");
+            } else {
+                recipes = getArguments().getParcelableArrayList(getString(R.string.parcel_recipe));
+                steps = (ArrayList<Steps>) recipes.get(0).getSteps();
+                clickedIndex = 0;
+            }
+        }
 
-        Bundle intent = getIntent().getExtras();
+        View rootView = layoutInflater.inflate(R.layout.fragment_recipe_steps_snap, viewGroup, false);
 
-        initializePlayer(Uri.parse(intent.getString(getResources().getString(R.string.recipe_video_url))));
+        simpleExoPlayerView = rootView.findViewById(R.id.playerView);
+
+        initializePlayer(Uri.parse(steps.get(clickedIndex).getVideoURL()));
 
         initializeMediaSession();
 
-        recipeVideoInstruction = findViewById(R.id.recipe_video_instruction);
-        recipeVideoInstruction.setText(intent.getString(getResources().getString(R.string.recipe_video_step_instruction)));
+        recipeVideoInstruction = rootView.findViewById(R.id.recipe_video_instruction);
+        recipeVideoInstruction.setText(steps.get(clickedIndex).getDescription());
 
-
+        return rootView;
     }
 
+
     private void initializePlayer(Uri uri) {
-        if(simpleExoPlayer == null){
+        if (simpleExoPlayer == null) {
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
-            simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this,trackSelector,loadControl);
+            simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector, loadControl);
             simpleExoPlayerView.setPlayer(simpleExoPlayer);
             simpleExoPlayer.addListener(this);
-            String userAgent = Util.getUserAgent(this,"sample");
+            String userAgent = Util.getUserAgent(getContext(), "sample");
             MediaSource mediaSource = new ExtractorMediaSource(uri, new DefaultDataSourceFactory(
-                    this, userAgent), new DefaultExtractorsFactory(), null, null);
+                    getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
             simpleExoPlayer.prepare(mediaSource);
             simpleExoPlayer.setPlayWhenReady(true);
         }
-
     }
 
 
     private void initializeMediaSession() {
 
         // Create a MediaSessionCompat.
-        mediaSessionCompat = new MediaSessionCompat(this, TAG);
+        mediaSessionCompat = new MediaSessionCompat(getContext(), TAG);
 
         // Enable callbacks from MediaButtons and TransportControls.
         mediaSessionCompat.setFlags(
@@ -105,14 +141,14 @@ public class RecipeStepsSnap extends AppCompatActivity implements ExoPlayer.Even
 
     }
 
-    public void releasePlayer(){
+    public void releasePlayer() {
         simpleExoPlayer.stop();
         simpleExoPlayer.release();
         simpleExoPlayer = null;
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         releasePlayer();
         mediaSessionCompat.setActive(false);
@@ -135,10 +171,10 @@ public class RecipeStepsSnap extends AppCompatActivity implements ExoPlayer.Even
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        if((playbackState == ExoPlayer.STATE_READY) && playWhenReady){
-            playbackStateCompatBuilder.setState(PlaybackStateCompat.STATE_PLAYING,simpleExoPlayer.getCurrentPosition(),1f);
-        }else if(playbackState == ExoPlayer.STATE_READY){
-            playbackStateCompatBuilder.setState(PlaybackStateCompat.STATE_PAUSED,simpleExoPlayer.getCurrentPosition(),1f);
+        if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
+            playbackStateCompatBuilder.setState(PlaybackStateCompat.STATE_PLAYING, simpleExoPlayer.getCurrentPosition(), 1f);
+        } else if (playbackState == ExoPlayer.STATE_READY) {
+            playbackStateCompatBuilder.setState(PlaybackStateCompat.STATE_PAUSED, simpleExoPlayer.getCurrentPosition(), 1f);
         }
 
     }
@@ -153,7 +189,7 @@ public class RecipeStepsSnap extends AppCompatActivity implements ExoPlayer.Even
 
     }
 
-    private class MySessionCallback extends MediaSessionCompat.Callback{
+    private class MySessionCallback extends MediaSessionCompat.Callback {
         @Override
         public void onPlay() {
             simpleExoPlayer.setPlayWhenReady(true);
@@ -173,18 +209,18 @@ public class RecipeStepsSnap extends AppCompatActivity implements ExoPlayer.Even
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(simpleExoPlayer!=null){
+        if (simpleExoPlayer != null) {
             videoPosition = simpleExoPlayer.getCurrentPosition();
-            outState.putLong("test",simpleExoPlayer.getCurrentPosition());
+            outState.putLong("test", simpleExoPlayer.getCurrentPosition());
         }
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        if(savedInstanceState!=null){
-             videoPosition = savedInstanceState.getLong("test");
-             simpleExoPlayer.seekTo(videoPosition);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            videoPosition = savedInstanceState.getLong("test");
+            simpleExoPlayer.seekTo(videoPosition);
         }
     }
 }

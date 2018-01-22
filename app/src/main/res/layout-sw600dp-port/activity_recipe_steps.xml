@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:tag="tablet-land"
+    android:id="@+id/activity_recipe_details_fregment_holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <FrameLayout
+            android:id="@+id/recipe_steps_fragment_container"
+            android:scaleType="centerInside"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"></FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/recipe_steps_snap_fragment_container"
+            android:scaleType="centerInside"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></FrameLayout>
+    </LinearLayout>
+</LinearLayout>
+
+
+
+

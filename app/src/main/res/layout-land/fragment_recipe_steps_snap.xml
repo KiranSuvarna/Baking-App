@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecipeStepsSnap"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
@@ -20,15 +19,17 @@
 
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
         android:id="@+id/playerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="0dp"
-        android:padding="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/horizontalHalf"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:resize_mode="fill" />
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalHalf"
+        android:layout_marginLeft="0dp"
+        app:resize_mode="fill"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/recipe_video_instruction"
@@ -44,6 +45,8 @@
         app:layout_constraintTop_toTopOf="@+id/horizontalHalf"
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
-        android:padding="16dp"/>
+        android:padding="16dp"
+        android:textColor="@color/white"/>
+
 
 </android.support.constraint.ConstraintLayout>
