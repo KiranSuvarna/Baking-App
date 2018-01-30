@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.google.gson.Gson;
 import com.imkiran.bakingapp.models.Recipe;
 import com.imkiran.bakingapp.models.Steps;
 
@@ -77,6 +79,12 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
                 clickedIndex = 0;
             }
         }
+
+        Log.d("steps : ", new Gson().toJson(steps));
+
+        Log.d("clicked index : ", String.valueOf(clickedIndex));
+
+
 
         View rootView = layoutInflater.inflate(R.layout.fragment_recipe_steps_snap, viewGroup, false);
 
@@ -213,6 +221,8 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
             videoPosition = simpleExoPlayer.getCurrentPosition();
             outState.putLong("test", simpleExoPlayer.getCurrentPosition());
         }
+        outState.putParcelableArrayList("recipe_step_selected",steps);
+        outState.putInt("clicked_index",clickedIndex);
     }
 
     @Override

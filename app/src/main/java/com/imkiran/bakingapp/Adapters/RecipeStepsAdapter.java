@@ -2,8 +2,6 @@ package com.imkiran.bakingapp.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +12,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.imkiran.bakingapp.R;
-import com.imkiran.bakingapp.RecipeStepInstruction;
 import com.imkiran.bakingapp.models.Steps;
 import com.squareup.picasso.Picasso;
 

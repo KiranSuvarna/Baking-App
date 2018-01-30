@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     RelativeLayout relativeLayout;
     List<Recipe> dataList;
     RecipeAdapter recipeAdapter;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
         relativeLayout =  findViewById(R.id.activity_main);
         recyclerView =  findViewById(R.id.recycler_view);
+        progressBar = findViewById(R.id.pb_loading_indicator);
         boolean targetSize = getResources().getBoolean(R.bool.tab_layout);
         if(targetSize) {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(this,4);
@@ -81,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             protected void onStartLoading() {
 
+                progressBar.setVisibility(View.VISIBLE);
+
                 if(theBakingAppResponse!=null){
                     deliverResult(theBakingAppResponse);
                 }   else{
@@ -112,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<Recipe>> loader, List<Recipe> data) {
+        progressBar.setVisibility(View.INVISIBLE);
         if (null == data) {
             Toast.makeText(this, getString(R.string.no_data), Toast.LENGTH_LONG).show();
         } else {

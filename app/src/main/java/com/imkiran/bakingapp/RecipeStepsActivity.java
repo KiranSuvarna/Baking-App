@@ -2,11 +2,13 @@ package com.imkiran.bakingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.MenuItem;
 
 import com.imkiran.bakingapp.Adapters.RecipeStepsAdapter;
+import com.imkiran.bakingapp.models.Recipe;
 import com.imkiran.bakingapp.models.Steps;
 
 import java.util.ArrayList;
@@ -23,7 +25,6 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         if (savedInstanceState == null) {
             Bundle intent = getIntent().getExtras();
             intent.getParcelableArrayList(getString(R.string.parcel_recipe));
-
 
             final RecipeStepsFragment recipeStepsFragment = new RecipeStepsFragment();
 
@@ -46,7 +47,6 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
                         .addToBackStack("test_2")
                         .commit();
             }
-
         }
     }
 
@@ -82,4 +82,5 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
 
 
     }
+
 }

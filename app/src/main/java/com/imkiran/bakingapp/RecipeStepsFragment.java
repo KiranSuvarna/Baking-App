@@ -1,6 +1,8 @@
 package com.imkiran.bakingapp;
 
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import com.imkiran.bakingapp.Adapters.RecipeStepsAdapter;
 import com.imkiran.bakingapp.models.Recipe;
 import com.imkiran.bakingapp.models.Steps;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeStepsFragment extends Fragment {
@@ -41,7 +44,11 @@ public class RecipeStepsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerViewIngredientsHead.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
 
-        recipe = getArguments().getParcelableArrayList(rootView.getContext().getResources().getString(R.string.parcel_recipe));
+        if(savedInstanceState != null){
+            recipe = savedInstanceState.getParcelableArrayList(getString(R.string.parcel_recipe));
+        }else{
+            recipe = getArguments().getParcelableArrayList(rootView.getContext().getResources().getString(R.string.parcel_recipe));
+        }
 
         List<Steps> stepsList = null;
         for (Recipe recipe : recipe) {
@@ -54,6 +61,12 @@ public class RecipeStepsFragment extends Fragment {
         recyclerViewIngredientsHead.setAdapter(recipeIngredientHead);
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(getString(R.string.parcel_recipe), (ArrayList<Recipe>) recipe);
     }
 }
 
