@@ -13,8 +13,10 @@ import android.widget.RelativeLayout;
 
 import com.imkiran.bakingapp.Adapters.RecipeIngredientHeadAdapter;
 import com.imkiran.bakingapp.Adapters.RecipeStepsAdapter;
+import com.imkiran.bakingapp.models.Ingredients;
 import com.imkiran.bakingapp.models.Recipe;
 import com.imkiran.bakingapp.models.Steps;
+import com.imkiran.bakingapp.widget.UpdateBakingService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,21 +46,34 @@ public class RecipeStepsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerViewIngredientsHead.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
 
-        if(savedInstanceState != null){
+        recipe = new ArrayList<>();
+        if (savedInstanceState != null) {
             recipe = savedInstanceState.getParcelableArrayList(getString(R.string.parcel_recipe));
-        }else{
+        } else {
             recipe = getArguments().getParcelableArrayList(rootView.getContext().getResources().getString(R.string.parcel_recipe));
+        }
+
+        List<Ingredients> ingredientsList = recipe.get(0).getIngredients();
+
+        ArrayList<String> recipeIngredientsForWidgets = new ArrayList<>();
+
+        for(Ingredients ingredient : ingredientsList){
+            recipeIngredientsForWidgets.add(ingredient.getIngredient()+"\n"+
+                    "Quantity: "+ingredient.getQuantity().toString()+"\n"+
+                    "Measure: "+ingredient.getMeasure()+"\n");
         }
 
         List<Steps> stepsList = null;
         for (Recipe recipe : recipe) {
             stepsList = recipe.getSteps();
         }
-        recipeStepsAdapter = new RecipeStepsAdapter((RecipeStepsActivity)getActivity());
+        recipeStepsAdapter = new RecipeStepsAdapter((RecipeStepsActivity) getActivity());
         recipeIngredientHead = new RecipeIngredientHeadAdapter(rootView.getContext(), recipe);
         recyclerView.setAdapter(recipeStepsAdapter);
         recipeStepsAdapter.setData(rootView.getContext(), stepsList);
         recyclerViewIngredientsHead.setAdapter(recipeIngredientHead);
+
+        UpdateBakingService.startBakingService(getContext(), recipeIngredientsForWidgets);
 
         return rootView;
     }
