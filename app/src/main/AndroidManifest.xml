@@ -26,6 +26,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <service android:name=".widget.UpdateBakingService"/>
+
         <activity android:name=".RecipeIngredients">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -37,12 +40,12 @@
                 android:value=".RecipeStepsActivity" />
         </activity>
 
-        <service android:name=".widget.WidgetService"
+
+        <service android:name=".widget.GridWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
-        <receiver android:name=".widget.BakingWidget" android:icon="@drawable/baking">
+        <receiver android:name=".widget.BakingWidgetProvider" android:icon="@drawable/example_appwidget_preview">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE2" />
             </intent-filter>

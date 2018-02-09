@@ -3,14 +3,19 @@ package com.imkiran.bakingapp;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -38,14 +43,14 @@ import java.util.List;
 
 public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.EventListener {
 
-    public RecipeStepsSnapFragment(){
+    public RecipeStepsSnapFragment() {
 
     }
 
     private ItemClickListener itemClickListener;
 
 
-    public interface ItemClickListener{
+    public interface ItemClickListener {
         void onClick(List<Steps> stepsList, int clickedIndex);
     }
 
@@ -64,6 +69,8 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle savedInstanceState) {
+
+        itemClickListener = (RecipeStepsActivity) getActivity();
 
         if (savedInstanceState != null) {
             steps = savedInstanceState.getParcelableArrayList("recipe_step_selected");
@@ -85,17 +92,61 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
         Log.d("clicked index : ", String.valueOf(clickedIndex));
 
 
-
         View rootView = layoutInflater.inflate(R.layout.fragment_recipe_steps_snap, viewGroup, false);
 
         simpleExoPlayerView = rootView.findViewById(R.id.playerView);
-
-        initializePlayer(Uri.parse(steps.get(clickedIndex).getVideoURL()));
-
-        initializeMediaSession();
-
         recipeVideoInstruction = rootView.findViewById(R.id.recipe_video_instruction);
         recipeVideoInstruction.setText(steps.get(clickedIndex).getDescription());
+        recipeVideoInstruction.setVisibility(View.VISIBLE);
+
+        String videoUrl = Uri.parse(steps.get(clickedIndex).getVideoURL()).toString();
+
+        if (!videoUrl.isEmpty()) {
+            initializePlayer(Uri.parse(steps.get(clickedIndex).getVideoURL()));
+            initializeMediaSession();
+        } else {
+            simpleExoPlayer = null;
+            simpleExoPlayerView.setForeground(ContextCompat.getDrawable(getContext(), R.drawable.no_video));
+            //simpleExoPlayerView.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_CONSTRAINT, 860));
+        }
+
+
+        Button previousStep = rootView.findViewById(R.id.previousStep);
+        Button nextStep = rootView.findViewById(R.id.nextStep);
+
+        previousStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (steps.get(clickedIndex).getId() > 0) {
+                    if (simpleExoPlayer != null) {
+                        simpleExoPlayer.stop();
+                    }
+                    Log.d("steps : ", new Gson().toJson(steps));
+                    Log.d("stepsclick : ", String.valueOf(steps.get(clickedIndex).getId() - 1));
+                    itemClickListener.onClick(steps, steps.get(clickedIndex).getId() - 1);
+                } else {
+                    Toast.makeText(getActivity(), "You already are in the First step of the recipe", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        nextStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int lastIndex = steps.size() - 1;
+                if (steps.get(clickedIndex).getId() < steps.get(lastIndex).getId()) {
+                    if (simpleExoPlayer != null) {
+                        simpleExoPlayer.stop();
+                    }
+                    Log.d("steps : ", new Gson().toJson(steps));
+                    Log.d("stepsclick : ", String.valueOf(steps.get(clickedIndex).getId() + 1));
+                    itemClickListener.onClick(steps, steps.get(clickedIndex).getId() + 1);
+                } else {
+                    Toast.makeText(getActivity(), "You already are in the Last step of the recipe", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         return rootView;
     }
@@ -150,16 +201,20 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
     }
 
     public void releasePlayer() {
-        simpleExoPlayer.stop();
-        simpleExoPlayer.release();
-        simpleExoPlayer = null;
+        if (simpleExoPlayer!=null){
+            simpleExoPlayer.stop();
+            simpleExoPlayer.release();
+            simpleExoPlayer = null;
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        releasePlayer();
-        mediaSessionCompat.setActive(false);
+        if(simpleExoPlayer!=null){
+            releasePlayer();
+            mediaSessionCompat.setActive(false);
+        }
     }
 
     @Override
@@ -221,8 +276,8 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
             videoPosition = simpleExoPlayer.getCurrentPosition();
             outState.putLong("test", simpleExoPlayer.getCurrentPosition());
         }
-        outState.putParcelableArrayList("recipe_step_selected",steps);
-        outState.putInt("clicked_index",clickedIndex);
+        outState.putParcelableArrayList("recipe_step_selected", steps);
+        outState.putInt("clicked_index", clickedIndex);
     }
 
     @Override

@@ -6,9 +6,6 @@ import android.content.Intent;
 
 import java.util.ArrayList;
 
-/**
- * Created by imkiran on 02/02/18.
- */
 
 public class UpdateBakingService extends IntentService {
 
@@ -32,8 +29,6 @@ public class UpdateBakingService extends IntentService {
 
         }
     }
-
-
 
     private void handleActionUpdateBakingWidgets(ArrayList<String> fromActivityIngredientsList) {
         Intent intent = new Intent("android.appwidget.action.APPWIDGET_UPDATE2");

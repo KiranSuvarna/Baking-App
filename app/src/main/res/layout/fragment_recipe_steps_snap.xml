@@ -45,4 +45,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/horizontalHalf" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="188dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalHalf">
+
+        <Button
+            android:id="@+id/previousStep"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/back_icon"
+            android:backgroundTintMode="src_over"
+            android:elevation="6dp"
+            android:padding="40dp" />
+
+        <Button
+            android:id="@+id/nextStep"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/forward_icon"
+            android:backgroundTintMode="src_over"
+            android:padding="40dp" />
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
+
+

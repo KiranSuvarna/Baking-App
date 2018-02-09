@@ -2,13 +2,10 @@ package com.imkiran.bakingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 
 import com.imkiran.bakingapp.Adapters.RecipeStepsAdapter;
-import com.imkiran.bakingapp.models.Recipe;
 import com.imkiran.bakingapp.models.Steps;
 
 import java.util.ArrayList;
@@ -60,7 +57,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         bundle.putInt("clicked_index", clickedIndex);
         recipeStepsSnapFragment.setArguments(bundle);
 
-        if (!stepsList.get(clickedIndex).getVideoURL().isEmpty()) {
+        //if (!stepsList.get(clickedIndex).getVideoURL().isEmpty()) {
             if (findViewById(R.id.activity_recipe_details_fregment_holder).getTag() != null && findViewById(R.id.activity_recipe_details_fregment_holder).getTag().equals("tablet-land")) {
                 fragmentManager.beginTransaction()
                         .replace(R.id.recipe_steps_snap_fragment_container, recipeStepsSnapFragment)
@@ -72,15 +69,13 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
                         .addToBackStack("test_2")
                         .commit();
             }
-        } else {
+       // }
+        /*else {
             Bundle bundleUrl = new Bundle();
             bundleUrl.putString(getResources().getString(R.string.recipe_video_step_instruction), stepsList.get(clickedIndex).getDescription());
             Intent intent = new Intent(this, RecipeStepInstruction.class);
             intent.putExtras(bundleUrl);
             startActivity(intent);
-        }
-
-
+        } */
     }
-
 }
