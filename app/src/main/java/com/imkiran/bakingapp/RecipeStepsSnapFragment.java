@@ -9,11 +9,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,11 +89,6 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
             }
         }
 
-        Log.d("steps : ", new Gson().toJson(steps));
-
-        Log.d("clicked index : ", String.valueOf(clickedIndex));
-
-
         View rootView = layoutInflater.inflate(R.layout.fragment_recipe_steps_snap, viewGroup, false);
 
         simpleExoPlayerView = rootView.findViewById(R.id.playerView);
@@ -107,7 +104,8 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
         } else {
             simpleExoPlayer = null;
             simpleExoPlayerView.setForeground(ContextCompat.getDrawable(getContext(), R.drawable.no_video));
-            //simpleExoPlayerView.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_CONSTRAINT, 860));
+            simpleExoPlayerView.setLayoutParams(new ConstraintLayout.LayoutParams(300, 300));
+            recipeVideoInstruction.setTextColor(getResources().getColor(R.color.black));
         }
 
 
@@ -121,8 +119,6 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
                     if (simpleExoPlayer != null) {
                         simpleExoPlayer.stop();
                     }
-                    Log.d("steps : ", new Gson().toJson(steps));
-                    Log.d("stepsclick : ", String.valueOf(steps.get(clickedIndex).getId() - 1));
                     itemClickListener.onClick(steps, steps.get(clickedIndex).getId() - 1);
                 } else {
                     Toast.makeText(getActivity(), "You already are in the First step of the recipe", Toast.LENGTH_SHORT).show();
@@ -138,8 +134,6 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
                     if (simpleExoPlayer != null) {
                         simpleExoPlayer.stop();
                     }
-                    Log.d("steps : ", new Gson().toJson(steps));
-                    Log.d("stepsclick : ", String.valueOf(steps.get(clickedIndex).getId() + 1));
                     itemClickListener.onClick(steps, steps.get(clickedIndex).getId() + 1);
                 } else {
                     Toast.makeText(getActivity(), "You already are in the Last step of the recipe", Toast.LENGTH_SHORT).show();
@@ -150,7 +144,6 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
 
         return rootView;
     }
-
 
     private void initializePlayer(Uri uri) {
         if (simpleExoPlayer == null) {
@@ -166,7 +159,6 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
             simpleExoPlayer.setPlayWhenReady(true);
         }
     }
-
 
     private void initializeMediaSession() {
 
@@ -201,7 +193,7 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
     }
 
     public void releasePlayer() {
-        if (simpleExoPlayer!=null){
+        if (simpleExoPlayer != null) {
             simpleExoPlayer.stop();
             simpleExoPlayer.release();
             simpleExoPlayer = null;
@@ -211,7 +203,7 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(simpleExoPlayer!=null){
+        if (simpleExoPlayer != null) {
             releasePlayer();
             mediaSessionCompat.setActive(false);
         }

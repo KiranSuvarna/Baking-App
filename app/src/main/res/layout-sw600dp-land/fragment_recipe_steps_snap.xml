@@ -7,7 +7,6 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
-
     <android.support.constraint.Guideline
         android:id="@+id/horizontalHalf"
         android:layout_width="wrap_content"
@@ -48,10 +47,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="188dp"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalHalf"
-        android:visibility="gone">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/previousStep"
