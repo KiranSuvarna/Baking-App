@@ -1,11 +1,12 @@
 package com.imkiran.bakingapp;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.imkiran.bakingapp.Adapters.RecipeStepsAdapter;
+import com.imkiran.bakingapp.models.Recipe;
 import com.imkiran.bakingapp.models.Steps;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import java.util.List;
 
 public class RecipeStepsActivity extends AppCompatActivity implements RecipeStepsAdapter.ItemClickListener, RecipeStepsSnapFragment.ItemClickListener {
 
+    ArrayList<Recipe> recipeArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +24,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
 
         if (savedInstanceState == null) {
             Bundle intent = getIntent().getExtras();
-            intent.getParcelableArrayList(getString(R.string.parcel_recipe));
+            recipeArrayList = intent.getParcelableArrayList(getString(R.string.parcel_recipe));
 
             final RecipeStepsFragment recipeStepsFragment = new RecipeStepsFragment();
 
@@ -32,7 +35,6 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
                     .replace(R.id.recipe_steps_fragment_container, recipeStepsFragment)
                     .addToBackStack("test")
                     .commit();
-
 
             if (findViewById(R.id.activity_recipe_details_fregment_holder).getTag() != null && findViewById(R.id.activity_recipe_details_fregment_holder).getTag().equals("tablet-land")) {
                 final RecipeStepsSnapFragment recipeStepsSnapFragment = new RecipeStepsSnapFragment();
@@ -69,13 +71,12 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
                         .addToBackStack("test_2")
                         .commit();
             }
-       // }
-        /*else {
-            Bundle bundleUrl = new Bundle();
-            bundleUrl.putString(getResources().getString(R.string.recipe_video_step_instruction), stepsList.get(clickedIndex).getDescription());
-            Intent intent = new Intent(this, RecipeStepInstruction.class);
-            intent.putExtras(bundleUrl);
-            startActivity(intent);
-        } */
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        outState.putParcelableArrayList(getResources().getString(R.string.parcel_recipe),recipeArrayList);
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 }
+

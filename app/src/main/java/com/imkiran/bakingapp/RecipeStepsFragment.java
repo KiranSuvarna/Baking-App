@@ -14,7 +14,7 @@ import com.imkiran.bakingapp.Adapters.RecipeStepsAdapter;
 import com.imkiran.bakingapp.models.Ingredients;
 import com.imkiran.bakingapp.models.Recipe;
 import com.imkiran.bakingapp.models.Steps;
-import com.imkiran.bakingapp.widget.UpdateBakingService;
+import com.imkiran.bakingapp.widget.BakingWidgetService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,10 +55,10 @@ public class RecipeStepsFragment extends Fragment {
 
         ArrayList<String> recipeIngredientsForWidgets = new ArrayList<>();
 
-        for(Ingredients ingredient : ingredientsList){
-            recipeIngredientsForWidgets.add(ingredient.getIngredient()+"\n"+
-                    "Quantity: "+ingredient.getQuantity().toString()+"\n"+
-                    "Measure: "+ingredient.getMeasure()+"\n");
+        for (Ingredients ingredient : ingredientsList) {
+            recipeIngredientsForWidgets.add(ingredient.getIngredient() + "\n" +
+                    "Quantity: " + ingredient.getQuantity().toString() + "\n" +
+                    "Measure: " + ingredient.getMeasure() + "\n");
         }
 
         List<Steps> stepsList = null;
@@ -71,7 +71,7 @@ public class RecipeStepsFragment extends Fragment {
         recipeStepsAdapter.setData(rootView.getContext(), stepsList);
         recyclerViewIngredientsHead.setAdapter(recipeIngredientHead);
 
-        UpdateBakingService.startBakingService(getContext(), recipeIngredientsForWidgets);
+        BakingWidgetService.startUpdateBakingWidget(getContext(), recipeIngredientsForWidgets);
 
         return rootView;
     }
