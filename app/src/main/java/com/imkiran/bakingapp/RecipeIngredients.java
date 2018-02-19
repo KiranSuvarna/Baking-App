@@ -41,7 +41,6 @@ public class RecipeIngredients extends AppCompatActivity {
             ingredientsList = recipe.getIngredients();
         }
 
-        Log.d("ingredients : ",new Gson().toJson(ingredientsList));
         recipeIngredientsAdapter = new RecipeIngredientsAdapter(RecipeIngredients.this, ingredientsList);
         recyclerView.setAdapter(recipeIngredientsAdapter);
     }

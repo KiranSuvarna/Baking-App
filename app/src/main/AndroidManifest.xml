@@ -33,11 +33,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".RecipeStepsActivity" />
         </activity>
-        <activity android:name=".RecipeStepInstruction">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".RecipeStepsActivity" />
-        </activity>
 
         <service android:name=".widget.BakingWidgetService"></service>
 
@@ -50,7 +45,7 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE2" />
-                <action android:name="PLEASE_PLAY"/>
+                <action android:name="PLEASE_PLAY" />
             </intent-filter>
 
             <meta-data

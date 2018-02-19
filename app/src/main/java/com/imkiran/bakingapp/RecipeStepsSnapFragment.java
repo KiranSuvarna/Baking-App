@@ -70,13 +70,13 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
         itemClickListener = (RecipeStepsActivity) getActivity();
 
         if (savedInstanceState != null) {
-            steps = savedInstanceState.getParcelableArrayList("recipe_step_selected");
-            clickedIndex = savedInstanceState.getInt("clicked_index");
+            steps = savedInstanceState.getParcelableArrayList(getResources().getString(R.string.recipe_step_selected));
+            clickedIndex = savedInstanceState.getInt(getResources().getString(R.string.clicked_index));
         } else {
-            steps = getArguments().getParcelableArrayList("recipe_step_selected");
+            steps = getArguments().getParcelableArrayList(getResources().getString(R.string.recipe_step_selected));
             if (steps != null) {
-                steps = getArguments().getParcelableArrayList("recipe_step_selected");
-                clickedIndex = getArguments().getInt("clicked_index");
+                steps = getArguments().getParcelableArrayList(getResources().getString(R.string.recipe_step_selected));
+                clickedIndex = getArguments().getInt(getResources().getString(R.string.clicked_index));
             } else {
                 recipes = getArguments().getParcelableArrayList(getString(R.string.parcel_recipe));
                 steps = (ArrayList<Steps>) recipes.get(0).getSteps();
@@ -261,17 +261,17 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
         super.onSaveInstanceState(outState);
         if (simpleExoPlayer != null) {
             videoPosition = simpleExoPlayer.getCurrentPosition();
-            outState.putLong("test", simpleExoPlayer.getCurrentPosition());
+            outState.putLong(getResources().getString(R.string.seek_position), simpleExoPlayer.getCurrentPosition());
         }
-        outState.putParcelableArrayList("recipe_step_selected", steps);
-        outState.putInt("clicked_index", clickedIndex);
+        outState.putParcelableArrayList(getResources().getString(R.string.recipe_step_selected), steps);
+        outState.putInt(getResources().getString(R.string.clicked_index), clickedIndex);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
-            videoPosition = savedInstanceState.getLong("test");
+            videoPosition = savedInstanceState.getLong(getResources().getString(R.string.seek_position));
             simpleExoPlayer.seekTo(videoPosition);
         }
     }

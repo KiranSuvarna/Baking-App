@@ -16,6 +16,10 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="widget_text">Open the App to view the widget cotents</string>
+    <string name="fragment_stack">Fragment stack</string>
+    <string name="recipe_step_selected">Recipe Step Selected</string>
+    <string name="clicked_index">Clicked index</string>
+    <string name="seek_position">Seek position</string>
 
 
 </resources>

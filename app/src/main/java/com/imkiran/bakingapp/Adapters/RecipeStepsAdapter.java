@@ -96,14 +96,6 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         @Override
         public void onClick(View v) {
             int clickedPosition = getAdapterPosition();
-           // String videoURL = data.get(clickedPosition).getVideoURL();
-            /*if (videoURL.isEmpty()) {
-                Bundle bundle = new Bundle();
-                bundle.putString(context.getResources().getString(R.string.recipe_video_step_instruction), data.get(clickedPosition).getDescription());
-                Intent intent = new Intent(context, RecipeStepInstruction.class);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
-            }*/
             itemClickListener.onClick(data, clickedPosition);
 
         }

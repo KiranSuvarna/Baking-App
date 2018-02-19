@@ -33,7 +33,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
 
             fragmentManager.beginTransaction()
                     .replace(R.id.recipe_steps_fragment_container, recipeStepsFragment)
-                    .addToBackStack("test")
+                    .addToBackStack(getResources().getString(R.string.fragment_stack))
                     .commit();
 
             if (findViewById(R.id.activity_recipe_details_fregment_holder).getTag() != null && findViewById(R.id.activity_recipe_details_fregment_holder).getTag().equals("tablet-land")) {
@@ -43,7 +43,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
 
                 fragmentManager.beginTransaction()
                         .replace(R.id.recipe_steps_snap_fragment_container, recipeStepsSnapFragment)
-                        .addToBackStack("test_2")
+                        .addToBackStack(getResources().getString(R.string.fragment_stack))
                         .commit();
             }
         }
@@ -55,20 +55,19 @@ public class RecipeStepsActivity extends AppCompatActivity implements RecipeStep
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("recipe_step_selected", (ArrayList<Steps>) stepsList);
-        bundle.putInt("clicked_index", clickedIndex);
+        bundle.putParcelableArrayList(getResources().getString(R.string.recipe_step_selected), (ArrayList<Steps>) stepsList);
+        bundle.putInt(getResources().getString(R.string.clicked_index), clickedIndex);
         recipeStepsSnapFragment.setArguments(bundle);
 
-        //if (!stepsList.get(clickedIndex).getVideoURL().isEmpty()) {
             if (findViewById(R.id.activity_recipe_details_fregment_holder).getTag() != null && findViewById(R.id.activity_recipe_details_fregment_holder).getTag().equals("tablet-land")) {
                 fragmentManager.beginTransaction()
                         .replace(R.id.recipe_steps_snap_fragment_container, recipeStepsSnapFragment)
-                        .addToBackStack("test_2")
+                        .addToBackStack(getResources().getString(R.string.fragment_stack))
                         .commit();
             } else {
                 fragmentManager.beginTransaction()
                         .replace(R.id.recipe_steps_fragment_container, recipeStepsSnapFragment)
-                        .addToBackStack("test_2")
+                        .addToBackStack(getResources().getString(R.string.fragment_stack))
                         .commit();
             }
     }

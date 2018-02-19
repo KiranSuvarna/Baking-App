@@ -62,7 +62,6 @@ public class JsonUtils  extends AppCompatActivity{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-       Log.d("JSON : ",new Gson().toJson(recipes));
        return new ArrayList(Arrays.asList(recipes));
     }
 }
