@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class ActivityTests {
+public class Tests {
 
     @Rule
     public ActivityTestRule<MainActivity> mainActivityActivityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -41,11 +41,9 @@ public class ActivityTests {
     }
 
     @Test
-    public void checkIfTheSimpleExoPlayerIsVisible(){
+    public void checkIfTheNextStepIsVisible(){
         onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
         onView(withId(R.id.recycler_view_recipe_steps)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
-        onView(withId(R.id.playerView)).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.nextStep))).check(matches(isDisplayed()));
     }
-
-
 }
