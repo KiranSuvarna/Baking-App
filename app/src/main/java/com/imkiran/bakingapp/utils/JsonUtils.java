@@ -2,7 +2,6 @@ package com.imkiran.bakingapp.utils;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.imkiran.bakingapp.R;
