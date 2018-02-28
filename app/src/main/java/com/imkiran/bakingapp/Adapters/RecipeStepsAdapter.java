@@ -53,23 +53,32 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     @Override
     public void onBindViewHolder(final RecipeStepsAdapter.CustomViewHolder holder, int position) {
         Steps steps = data.get(position);
-
+        String thumbnailUrl = steps.getThumbnailURL();
         final String videoURL = steps.getVideoURL();
-        if (!videoURL.isEmpty()) {
-            //generate thumbnail
+        if (thumbnailUrl.isEmpty()) {       // Submission revision :  Checking for the thumbnail URL, if its empty handling as below :)
+            if (!videoURL.isEmpty()) {
+                //generate thumbnail
+                Glide
+                        .with(context)
+                        .load(videoURL)
+                        .thumbnail(1f)
+                        .into(holder.recipeStepImage);
+            } else {
+                //load default image
+                Picasso.with(context)
+                        .load(R.drawable.baking)
+                        .fit()
+                        .centerCrop()
+                        .into(holder.recipeStepImage);
+            }
+        } else {
             Glide
                     .with(context)
-                    .load(videoURL)
+                    .load(thumbnailUrl)
                     .thumbnail(1f)
                     .into(holder.recipeStepImage);
-        } else {
-            //load default image
-            Picasso.with(context)
-                    .load(R.drawable.baking)
-                    .fit()
-                    .centerCrop()
-                    .into(holder.recipeStepImage);
         }
+
         holder.recipeStepTitle.setText(steps.getShortDescription());
     }
 

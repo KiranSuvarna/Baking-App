@@ -25,56 +25,63 @@ import java.util.List;
  * Created by imkiran on 29/12/17.
  */
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CustomViewHolder>{
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CustomViewHolder> {
 
     private Context context;
     private List<Recipe> dataList;
 
-    public RecipeAdapter(Context context, List<Recipe> dataList){
+    public RecipeAdapter(Context context, List<Recipe> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_list_recipe,null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_list_recipe, null);
         CustomViewHolder customViewHolder = new CustomViewHolder(view);
         return customViewHolder;
     }
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-            Recipe recipe = dataList.get(position);
+        Recipe recipe = dataList.get(position);
+        String imageUrl = recipe.getImage();
         String recipeImage = "";
-        switch (recipe.getName()){
-            case "Nutella Pie":
-                recipeImage = context.getString(R.string.nutella_pie_image_url);
-                break;
-            case  "Brownies":
-                recipeImage  = context.getString(R.string.brownies_image_url);
-                break;
-            case "Yellow Cake":
-                recipeImage = context.getString(R.string.yellowcake_image_url_);
-                break;
-            case "Cheesecake":
-                recipeImage = context.getString(R.string.cheesecake_image_url);
-                break;
-            default: break;
+        if (imageUrl.isEmpty()) {         // Submission revision :  Checking for the image URL, if its empty handling as below :)
+            switch (recipe.getName()) {
+                case "Nutella Pie":
+                    recipeImage = context.getString(R.string.nutella_pie_image_url);
+                    break;
+                case "Brownies":
+                    recipeImage = context.getString(R.string.brownies_image_url);
+                    break;
+                case "Yellow Cake":
+                    recipeImage = context.getString(R.string.yellowcake_image_url_);
+                    break;
+                case "Cheesecake":
+                    recipeImage = context.getString(R.string.cheesecake_image_url);
+                    break;
+                default:
+                    break;
+            }
+            Picasso.with(context)
+                    .load(recipeImage)
+                    .fit()
+                    .centerCrop()
+                    .into(holder.recipe_image);
+        } else {
+            Picasso.with(context)
+                    .load(imageUrl)
+                    .fit()
+                    .centerCrop()
+                    .into(holder.recipe_image);
         }
-
-        Picasso.with(context)
-                .load(recipeImage)
-                .fit()
-                .centerCrop()
-                .into(holder.recipe_image);
-
         holder.nameTextView.setText(recipe.getName());
-
     }
 
     @Override
     public int getItemCount() {
-        return dataList!=null ? dataList.size() : 0;
+        return dataList != null ? dataList.size() : 0;
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -85,10 +92,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CustomView
 
         CustomViewHolder(View itemView) {
             super(itemView);
-
-            nameTextView =  itemView.findViewById(R.id.recipe_name);
-            recipe_image =  itemView.findViewById(R.id.recipe_image);
-            cardView =  itemView.findViewById(R.id.card_view);
+            nameTextView = itemView.findViewById(R.id.recipe_name);
+            recipe_image = itemView.findViewById(R.id.recipe_image);
+            cardView = itemView.findViewById(R.id.card_view);
 
             cardView.setOnClickListener(this);
         }
@@ -99,7 +105,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CustomView
             Bundle bundle = new Bundle();
             ArrayList<Recipe> recipeArrayList = new ArrayList<>();
             recipeArrayList.add(dataList.get(clickedPosition));
-            bundle.putParcelableArrayList(context.getResources().getString(R.string.parcel_recipe),recipeArrayList);
+            bundle.putParcelableArrayList(context.getResources().getString(R.string.parcel_recipe), recipeArrayList);
             Intent intent = new Intent(context, RecipeStepsActivity.class);
             intent.putExtras(bundle);
             context.startActivity(intent);

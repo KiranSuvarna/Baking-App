@@ -196,8 +196,8 @@ public class RecipeStepsSnapFragment extends Fragment implements ExoPlayer.Event
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
         if (simpleExoPlayer != null) {
             releasePlayer();
             mediaSessionCompat.setActive(false);
